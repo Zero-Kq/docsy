@@ -1,34 +1,57 @@
-name: Deploy Docsy to GitHub Pages
+name: Deployment to GitHub Pages
+
+# 触发条件：手动触发 + main分支推送（移除pull_request，避免不必要的触发）
 on:
+  workflow_dispatch:  # 支持手动触发
   push:
-    branches: [main]  # 监听主分支推送
+    branches:
+      - main  # 仅在main分支推送时触发
+
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+  REPO_OWNER: ${{ github.repository_owner }}
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    permissions:  # 显式声明权限（可选，增强兼容性）
-      contents: write  # 允许写入仓库内容
-      pages: write     # 允许操作GitHub Pages
-      id-token: write
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write       # 用于推送gh-pages分支
+      pages: write          # 用于GitHub Pages部署
+      id-token: write       # 用于Pages身份验证
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}  # 避免并发部署冲突
     steps:
+      # 1. 拉取仓库代码
       - uses: actions/checkout@v4
         with:
-          submodules: true  # 拉取Docsy主题子模块
-          fetch-depth: 0
+          fetch-depth: 0  # 拉取完整提交历史（Hugo需要GitInfo）
 
-      # 容器化编译Hugo站点
-      - name: Build with Docker
-        run: |
-          docker build -t docsy-builder .
-          # 从容器中拷贝编译产物到本地
-          docker create --name temp-builder docsy-builder          
-          docker cp temp-builder:/src/public ./public
-          docker rm temp-builder
+      # 2. 安装Hugo（Docsy依赖extended版本）
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.146.0'
+          extended: true
 
-      # 部署到GitHub Pages
+      # 3. 安装Node.js（Docsy需要npm依赖）
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'  # 缓存npm依赖，加速构建
+
+      # 4. 安装npm依赖（Docsy主题必需）
+      - run: npm install
+
+      # 5. 构建Hugo站点
+      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
+
+      # 6. 部署到gh-pages分支
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          publish_branch: gh-pages  # 部署到gh-pages分支
+          publish_dir: ./public       # Hugo构建产物目录
+          force_orphan: true          # 清空gh-pages历史，减小分支体积
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
