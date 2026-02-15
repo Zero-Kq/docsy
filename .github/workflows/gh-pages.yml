@@ -6,6 +6,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:  # 显式声明权限（可选，增强兼容性）
+      contents: write  # 允许写入仓库内容
+      pages: write     # 允许操作GitHub Pages
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
