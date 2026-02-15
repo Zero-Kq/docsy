@@ -1,0 +1,30 @@
+name: Deploy Docsy to GitHub Pages
+on:
+  push:
+    branches: [main]  # 监听主分支推送
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true  # 拉取Docsy主题子模块
+          fetch-depth: 0
+
+      # 容器化编译Hugo站点
+      - name: Build with Docker
+        run: |
+          docker build --target builder -t docsy-builder .
+          # 从容器中拷贝编译产物到本地
+          docker create --name temp-builder docsy-builder
+          docker cp temp-builder:/app/public ./public
+          docker rm temp-builder
+
+      # 部署到GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages  # 部署到gh-pages分支
