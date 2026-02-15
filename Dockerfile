@@ -10,15 +10,20 @@ RUN apk add --no-cache git nodejs npm \
   && npm install -g postcss-cli rtlcss \
   && git config --global --add safe.directory /src
 
+# 设置工作目录
+WORKDIR /src
+
+# 复制源代码
+COPY . /src
+
+# 设置 /src 目录的所有者为 hugo 用户
+RUN chown -R hugo:hugo /src
+
 # 可选：切回原镜像的非root用户（提升容器安全性）
 USER hugo
 
 # 暴露Hugo默认端口（可选，增强可读性）
 EXPOSE 1313
 
-# 设置工作目录（与docker-compose的volume挂载路径对齐）
-WORKDIR /src
-
-COPY . /src
 # 补充：执行 Hugo 构建（生成 public 目录）
 RUN hugo --destination public
