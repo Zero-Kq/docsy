@@ -17,7 +17,7 @@ jobs:
         run: |
           docker build -t docsy-builder .
           # 从容器中拷贝编译产物到本地
-          docker create --name temp-builder docsy-builder
+          docker run --name temp-builder -v ${{ github.workspace }}:/src docsy-builder:latest hugo --baseURL "https://zero-kq.github.io/docsy/" --destination public          
           docker cp temp-builder:/src/public ./public
           docker rm temp-builder
 

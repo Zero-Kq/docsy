@@ -18,3 +18,7 @@ EXPOSE 1313
 
 # 设置工作目录（与docker-compose的volume挂载路径对齐）
 WORKDIR /src
+
+COPY . /src
+# 补充：执行 Hugo 构建（生成 public 目录）
+RUN hugo --destination public

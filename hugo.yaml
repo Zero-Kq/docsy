@@ -1,6 +1,8 @@
 baseURL: https://zero-kq.github.io/docsy/
 title: Goldydocs
 
+
+
 # cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu slugorcontentbasename
 
 # Language settings
