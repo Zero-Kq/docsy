@@ -39,6 +39,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'  # 缓存npm依赖，加速构建
+          cache-dependency-path: '**/package-lock.json'
 
       # 4. 安装npm依赖（Docsy主题必需）
       - run: npm install
