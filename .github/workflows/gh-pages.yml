@@ -15,7 +15,7 @@ jobs:
       # 容器化编译Hugo站点
       - name: Build with Docker
         run: |
-          docker build --target builder -t docsy-builder .
+          docker build -t docsy-builder .
           # 从容器中拷贝编译产物到本地
           docker create --name temp-builder docsy-builder
           docker cp temp-builder:/app/public ./public
