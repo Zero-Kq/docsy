@@ -41,28 +41,33 @@ jobs:
           cache: 'npm'  # 缓存npm依赖，加速构建
           cache-dependency-path: '**/package-lock.json'
 
-      # 4. 初始化Hugo模块缓存（必须在npm install之前）
-      - name: Setup Hugo Module Cache
-        env:
-          HUGO_MODULE_CACHE_DIR: /tmp/hugo_modules
-        run: mkdir -p $HUGO_MODULE_CACHE_DIR
+      # 4. 清理旧的构建产物和缓存
+      - name: Clean build artifacts
+        run: | 
+          rm -rf public resources/_gen
+          npm run clean
 
-      # 5. 更新Hugo模块（下载Docsy主题）
+      # 5. 安装npm依赖（Docsy主题必需）
+      - run: npm install
+
+      # 6. 更新Hugo模块（下载Docsy主题）
       - name: Update Hugo Modules
-        env:
-          HUGO_MODULE_MODE: readonly
         run: |
           hugo mod clean
           hugo mod get -u
+          hugo mod tidy
 
-      # 6. 清理旧的构建产物
-      - run: npm run clean
-
-      # 7. 安装npm依赖（Docsy主题必需）
-      - run: npm install
-
-      # 8. 构建Hugo站点
-      - run: hugo --baseURL https://zero-kq.github.io/docsy/ --minify --enableGitInfo --cleanDestinationDir
+      # 7. 构建Hugo站点
+      - name: Build with Hugo
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          hugo --baseURL https://zero-kq.github.io/docsy/ \
+            --minify \
+            --enableGitInfo \
+            --cleanDestinationDir \
+            -v
 
       # 6. 部署到gh-pages分支
       - name: Deploy to GitHub Pages
