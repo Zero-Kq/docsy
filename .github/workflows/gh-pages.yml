@@ -70,7 +70,7 @@ jobs:
             --minify \
             --enableGitInfo \
             --cleanDestinationDir \
-            -v
+            
 
       # 6. 部署到gh-pages分支
       - name: Deploy to GitHub Pages
