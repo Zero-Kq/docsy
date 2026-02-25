@@ -9,6 +9,8 @@ defaultContentLanguage: cn
 defaultContentLanguageInSubdir: false
 # Useful when translating.
 enableMissingTranslationPlaceholders: true
+# 禁用英语语言
+disableLanguages: ["en"]
 
 enableRobotsTXT: true
 
