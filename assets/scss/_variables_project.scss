@@ -1,4 +1,1528 @@
-/*
-Projects can override this file. For details, see:
-https://www.docsy.dev/docs/content/lookandfeel/#project-style-files
-*/
+/* ==========================================================================
+   Docsy Theme Custom Variables and Styles
+   ========================================================================== */
+
+/* ==========================================================================
+   1. GLOBAL VARIABLES
+   ========================================================================== */
+
+/* Glassmorphism style variables */
+$consistent-bg: rgba(255, 255, 255, 0.1);
+$consistent-blur: blur(10px);
+$consistent-border-color: var(--bs-border-color);
+$consistent-border: 1px solid var(--bs-border-color);
+$consistent-white-border: 1px solid white;
+
+/* Opaque background variables for better readability */
+$opaque-bg-light: rgba(255, 255, 255, 0.85);
+$opaque-bg-medium: rgba(255, 255, 255, 0.75);
+$opaque-bg-dark: rgba(255, 255, 255, 0.65);
+$opaque-bg-very-dark: rgba(255, 255, 255, 0.55);
+$global-hover-bg: rgba(255, 255, 255, 0.2);
+$global-hover-bg-dark: rgba(0, 0, 0, 0.05);
+
+/* Dropdown menu specific variables */
+$dropdown-bg: $opaque-bg-medium;
+$dropdown-border: 1px solid rgba(255, 255, 255, 0.3);
+$dropdown-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+/* ==========================================================================
+   2. GLOBAL BACKGROUND OVERLAY
+   ========================================================================== */
+
+/* Add semi-transparent overlay for text readability over background images */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+}
+
+/* Remove global overlay for blog article pages */
+.td-section.td-blog:not(.td-cover-block) body::before {
+    display: none !important;
+}
+
+/* ==========================================================================
+   3. SIDEBAR STYLES
+   ========================================================================== */
+
+/* Global sidebar blur effects */
+.td-sidebar, .td-sidebar-toc {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    -webkit-backdrop-filter: $consistent-blur;
+
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+    padding-bottom: 1rem;
+}
+
+.td-sidebar__inner a {
+    color: white !important;
+}
+/* Hover effect for sidebar links */
+.td-sidebar__inner a:hover {
+    background: $global-hover-bg !important;
+    border-radius: 4px !important;
+    text-decoration: none;
+}
+/* Dark hover on single blog pages */
+.td-page.td-blog .td-sidebar__inner a:hover {
+    background: $global-hover-bg-dark !important;
+    border-radius: 4px !important;
+    text-decoration: none;
+}
+// Reset sidebar link color to default on single blog pages
+.td-page.td-blog .td-sidebar__inner a {
+    color: initial !important;
+}
+
+/* Sidebar tree root bottom border */
+.td-sidebar-nav .td-sidebar-link.tree-root {
+    border-bottom-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Override sidebar tree root bottom border on single blog pages */
+.td-page.td-blog .td-sidebar-nav .td-sidebar-link.tree-root {
+    border-bottom-color: $black !important;
+}
+
+/* ==========================================================================
+   3.1. TABLE OF CONTENTS STYLES
+   ========================================================================== */
+
+.td-toc {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.td-toc #TableOfContents {
+    color: white !important;
+}
+
+.td-toc #TableOfContents ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.td-toc #TableOfContents li {
+    margin-bottom: 0.25rem;
+    color: white !important;
+}
+
+.td-toc #TableOfContents a {
+    color: white !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 0rem 0;
+    padding-left: 0rem;
+}
+
+.td-toc #TableOfContents a:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+    background: $global-hover-bg-dark !important;
+    text-decoration: none;
+    border-radius: 4px !important;
+}
+
+.td-toc #TableOfContents ul ul {
+    padding-left: 0.5rem;
+    margin-top: 0;
+}
+
+.td-toc #TableOfContents ul ul a {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.td-toc #TableOfContents ul ul a:hover {
+    color: white !important;
+    background: $global-hover-bg-dark !important;
+    border-radius: 4px !important;
+}
+
+/* Blog posts: glider-like highlight for current reading ToC item */
+.td-page.td-blog .td-toc #TableOfContents a {
+    position: relative;
+    border-radius: 99px;
+    padding: 0.2rem 0.5rem;
+}
+
+.td-page.td-blog .td-toc #TableOfContents a.active,
+.td-page.td-blog .td-toc #TableOfContents li.active > a,
+.td-page.td-blog .td-toc #TableOfContents a[aria-current="true"] {
+    color: #8b001a !important;
+    background-color: transparent !important; /* remove default background, glider handles highlight */
+}
+
+.td-page.td-blog .td-toc #TableOfContents a,
+.td-page.td-blog .td-toc #TableOfContents a.active {
+    transition: color 0.15s ease-in, background-color 0.25s ease-out, box-shadow 0.25s ease-out;
+}
+
+/* Nested items slightly smaller but same highlight behavior */
+.td-page.td-blog .td-toc #TableOfContents ul ul a {
+    font-size: 0.9em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 99px;
+}
+
+/* Disable hover box for ToC links on blog pages */
+.td-page.td-blog .td-toc #TableOfContents a:hover {
+    background-color: transparent !important;
+}
+
+/* Glider container and element */
+.td-page.td-blog .td-toc {
+    position: relative;
+}
+
+.td-page.td-blog .td-toc .toc-glider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px; /* will be updated by JS */
+    background-color: #f6c6ce;
+    border-radius: 99px;
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+    transition: transform 0.25s ease-out, height 0.15s ease-out;
+    z-index: 1;
+}
+
+.td-page.td-blog .td-toc.is-hovering .toc-glider {
+    background-color: #f6c6ce;
+}
+
+/* Ensure ToC links sit above the glider */
+.td-page.td-blog .td-toc #TableOfContents a {
+    position: relative;
+    z-index: 2;
+    background: transparent !important;
+}
+
+/* No special link color on hover while hovering; glider alone indicates focus */
+
+/* During hover freeze, keep active link default (no outline box) */
+
+/* Force white text for right TOC on non-blog pages */
+.td-page:not(.td-blog) .td-toc,
+.td-page:not(.td-blog) .td-toc *,
+.td-page:not(.td-blog) .td-toc #TableOfContents,
+.td-page:not(.td-blog) .td-toc #TableOfContents *,
+.td-page:not(.td-blog) .td-toc #TableOfContents ul,
+.td-page:not(.td-blog) .td-toc #TableOfContents li,
+.td-page:not(.td-blog) .td-toc #TableOfContents a,
+.td-page:not(.td-blog) .td-toc .text-dark,
+.td-page:not(.td-blog) .td-toc .text-body,
+.td-page:not(.td-blog) .td-toc .text-muted,
+.td-page:not(.td-blog) .td-toc .text-secondary {
+    color: white !important;
+}
+/* Reset TOC to default on single blog pages */
+.td-page.td-blog .td-toc,
+.td-page.td-blog .td-toc *,
+.td-page.td-blog .td-toc #TableOfContents,
+.td-page.td-blog .td-toc #TableOfContents *,
+.td-page.td-blog .td-toc #TableOfContents ul,
+.td-page.td-blog .td-toc #TableOfContents li,
+.td-page.td-blog .td-toc #TableOfContents a,
+.td-page.td-blog .td-toc .text-dark,
+.td-page.td-blog .td-toc .text-body,
+.td-page.td-blog .td-toc .text-muted,
+.td-page.td-blog .td-toc .text-secondary {
+    color: initial !important;
+}
+
+
+/* ==========================================================================
+   4. SEARCH BAR STYLES
+   ========================================================================== */
+
+/* Unified search bar styling */
+.td-search__input {
+    background: $consistent-bg !important;
+    backdrop-filter: $consistent-blur !important;
+    border: 1px solid white !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    color: white !important;
+    transition: all 0.3s ease !important;
+}
+
+.td-search__input:focus {
+    background: white !important;
+    color: black !important;
+    border-color: white !important;
+    box-shadow: none !important;
+}
+
+.td-search__input::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.td-search__input:focus::placeholder {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Search icon styling */
+.td-search__icon {
+    color: white !important;
+}
+/* Sidebar search input styling on single blog pages */
+.td-page.td-blog .td-sidebar__search .td-search__icon {
+    color: initial !important;
+}
+.td-page.td-blog .td-sidebar__search .td-search__input {
+    background: $global-hover-bg-dark !important;
+    border-color: $black !important;
+    color: white !important;
+}
+/* Restore placeholder color to default on single blog pages */
+.td-page.td-blog .td-sidebar__search .td-search__input::placeholder {
+    color: initial !important;
+}
+
+/* Active/focus effect for sidebar search on single blog pages */
+.td-page.td-blog .td-sidebar__search .td-search__input:focus,
+.td-page.td-blog .td-sidebar__search .td-search__input:active {
+    background: $global-hover-bg !important;
+    border-color: $black !important;
+    color: $black !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px $black !important;
+}
+/* Lighter placeholder color when active/focused */
+.td-page.td-blog .td-sidebar__search .td-search__input:focus::placeholder,
+.td-page.td-blog .td-sidebar__search .td-search__input:active::placeholder {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Unified clear button styling for all search inputs */
+body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-cancel-button,
+#td-sidebar-menu > form > div > input::-webkit-search-cancel-button {
+    filter: brightness(0) !important; /* Black color */
+}
+
+/* ==========================================================================
+   5. NAVBAR STYLES
+   ========================================================================== */
+
+
+/* Blog and docs pages navbar transparency, no !important since default is important, double important causes problem */
+/* NO !important HERE` */
+.td-section.td-blog .td-navbar,
+.td-section.td-docs .td-navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: $consistent-blur;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    /* 确保navbar在sidebar之上 */
+    z-index: 1030;
+    border-left: none;
+    border-right: none;
+    // position: relative;
+}
+
+
+
+
+/* Transparent navbar when covered by background */
+.td-navbar-cover {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Navbar link styles */
+.td-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.td-navbar .nav-link:hover {
+    color: white !important;
+    transform: translateY(-1px) !important;
+}
+
+.td-navbar .nav-link.active {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* Logo positioning and color */
+.td-navbar .navbar-brand {
+    transition: transform 0.3s ease !important;
+}
+
+.td-navbar .navbar-brand img,
+.td-navbar .navbar-brand svg {
+    transform: translateY(-5px) !important;
+    filter: brightness(0) invert(1) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.td-navbar .navbar-brand svg {
+    fill: white !important;
+    color: white !important;
+}
+
+.td-navbar .navbar-brand svg path {
+    fill: white !important;
+}
+
+/* ==========================================================================
+   6. DROPDOWN MENU STYLES
+   ========================================================================== */
+
+.td-navbar .dropdown-menu {
+    background: $dropdown-bg;
+    backdrop-filter: $consistent-blur;
+    border: $dropdown-border;
+    box-shadow: $dropdown-shadow;
+    border-radius: 12px !important;
+    padding: 0.5rem 0 !important;
+    margin-top: 0.5rem !important;
+}
+
+.td-navbar .dropdown-item {
+    color: #333 !important;
+    transition: all 0.3s ease !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0 !important;
+    font-weight: 500 !important;
+}
+
+.td-navbar .dropdown-item:hover {
+    background: rgba(102, 126, 234, 0.15) !important;
+    color: #667eea !important;
+    transform: translateX(3px) !important;
+}
+
+.td-navbar .dropdown-item:active {
+    background: rgba(102, 126, 234, 0.2) !important;
+    color: #667eea !important;
+}
+
+.td-navbar .dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    margin: 0.5rem 0 !important;
+}
+
+/* ==========================================================================
+   7. BUTTON STYLES
+   ========================================================================== */
+
+/* Transparent button styling */
+.btn-transparent {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    color: white !important;
+    backdrop-filter: $consistent-blur;
+    transition: all 0.3s ease;
+}
+
+.btn-transparent:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: white !important;
+    text-decoration: none;
+}
+
+.btn-transparent:focus {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    color: white !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+.btn-transparent i {
+    color: white !important;
+}
+
+/* ==========================================================================
+   8. COVER BLOCK STYLES
+   ========================================================================== */
+
+/* Cover block background settings */
+.td-cover-block {
+    background-image: url('/Docsy/images/backgrounds/bg11.webp') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.td-cover-block--height-full {
+    min-height: 100vh !important;
+    height: 100vh !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    overflow: hidden !important;
+}
+
+.td-cover-block .td-overlay {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Playwrite PL font for cover titles */
+.td-cover-block h1,
+.td-cover-block .display-1,
+.td-cover-block .display-2,
+.td-cover-block .display-3,
+.td-cover-block .display-4 {
+    font-family: 'Playwrite PL', cursive !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+    line-height: 1.2 !important;
+    font-feature-settings: "liga" 1, "kern" 1 !important;
+}
+
+/* Cover block link-down button styling */
+.td-cover-block .btn.btn-link.text-light,
+.td-cover-block a.btn.btn-link.text-light {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 35px !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
+    margin: 2rem auto 0 !important;
+    text-decoration: none !important;
+    z-index: 10 !important;
+}
+
+.td-cover-block .btn.btn-link.text-light:hover,
+.td-cover-block a.btn.btn-link.text-light:hover {
+    transform: translateY(-4px) scale(1.1) !important;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
+    border: none !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.td-cover-block .btn.btn-link.text-light i,
+.td-cover-block a.btn.btn-link.text-light i {
+    color: rgba(255, 255, 255, 0.1) !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2)) !important;
+    font-size: 2rem !important;
+}
+
+.td-cover-block .btn.btn-link.text-light:hover i,
+.td-cover-block a.btn.btn-link.text-light:hover i {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transform: scale(1.15) !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)) !important;
+}
+
+/* ==========================================================================
+   9. CONTACT PAGE STYLES
+   ========================================================================== */
+
+/* Contact info container */
+.contact-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 1rem;
+    min-height: 60vh;
+    align-items: flex-start;
+    padding-top: 15vh;
+}
+
+/* Contact card styling */
+.contact-card {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    min-width: 240px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.6s;
+}
+
+.contact-card:hover::before {
+    left: 100%;
+}
+
+.contact-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Contact icon styling */
+.contact-icon {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.contact-icon i {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.contact-card:hover .contact-icon i {
+    color: white;
+    transform: scale(1.15);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Contact details styling */
+.contact-details {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-value {
+    font-family: 'Playwrite PL', cursive;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    word-break: break-word;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    line-height: 1.3;
+}
+
+.contact-card:hover .contact-value {
+    color: #f8f9fa;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   10. BLOG PAGE STYLES
+   ========================================================================== */
+
+/* Blog page layout */
+.blog-page {
+    position: relative;
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+/* ==========================================================================
+   10.1. BLOG BACKGROUND STYLES
+   ========================================================================== */
+
+/* Blog list page - use same random background as homepage */
+.blog-page {
+    position: relative;
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+
+
+.blog-page .td-content {
+    position: relative;
+    z-index: 2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 120px) !important;
+}
+
+.blog-page .blog-posts {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* Hide blog page title and intro */
+.blog-page h1,
+.blog-page .h1 {
+    display: none !important;
+}
+
+.blog-page .blog-intro {
+    display: none !important;
+}
+
+/* Blog post container - 3D card effect container */
+.blog-page .blog-post-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    transition: 200ms;
+    margin-bottom: 2rem;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Blur glow effect on container - not affected by card rotation */
+.blog-page .blog-post-container::before {
+    content: '';
+    background: linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%);
+    filter: blur(2rem);
+    opacity: 30%;
+    position: absolute;
+    inset: -20px;
+    z-index: -1;
+    transition: opacity 200ms;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* Enhanced blur on hover */
+.blog-page .blog-post-container:hover::before {
+    opacity:60%;
+    transition: opacity 200ms;
+}
+
+/* Active state for container - slight scale down on click for feedback */
+.blog-page .blog-post-container:active {
+    transform: scale(0.98);
+    transition: 100ms;
+}
+
+/* Canvas for tracker grid */
+.blog-page .blog-post-canvas {
+    perspective: 800px;
+    inset: 0;
+    z-index: 200;
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0px;
+    grid-template-areas: 
+        "tr-1 tr-2 tr-3 tr-4 tr-5"
+        "tr-6 tr-7 tr-8 tr-9 tr-10"
+        "tr-11 tr-12 tr-13 tr-14 tr-15"
+        "tr-16 tr-17 tr-18 tr-19 tr-20"
+        "tr-21 tr-22 tr-23 tr-24 tr-25";
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+}
+
+/* Tracker elements - use pointer-events to allow hover but pass through clicks */
+.blog-page .blog-post-tracker {
+    position: relative;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+}
+
+/* Make trackers pass through clicks but still detect hover */
+.blog-page .blog-post-canvas {
+    pointer-events: none;
+}
+
+.blog-page .blog-post-tracker {
+    pointer-events: auto;
+}
+
+.blog-page .blog-post-item {
+    pointer-events: auto;
+}
+
+/* Tracker grid area assignments */
+.blog-page .blog-post-tracker.tr-1 { grid-area: tr-1; }
+.blog-page .blog-post-tracker.tr-2 { grid-area: tr-2; }
+.blog-page .blog-post-tracker.tr-3 { grid-area: tr-3; }
+.blog-page .blog-post-tracker.tr-4 { grid-area: tr-4; }
+.blog-page .blog-post-tracker.tr-5 { grid-area: tr-5; }
+.blog-page .blog-post-tracker.tr-6 { grid-area: tr-6; }
+.blog-page .blog-post-tracker.tr-7 { grid-area: tr-7; }
+.blog-page .blog-post-tracker.tr-8 { grid-area: tr-8; }
+.blog-page .blog-post-tracker.tr-9 { grid-area: tr-9; }
+.blog-page .blog-post-tracker.tr-10 { grid-area: tr-10; }
+.blog-page .blog-post-tracker.tr-11 { grid-area: tr-11; }
+.blog-page .blog-post-tracker.tr-12 { grid-area: tr-12; }
+.blog-page .blog-post-tracker.tr-13 { grid-area: tr-13; }
+.blog-page .blog-post-tracker.tr-14 { grid-area: tr-14; }
+.blog-page .blog-post-tracker.tr-15 { grid-area: tr-15; }
+.blog-page .blog-post-tracker.tr-16 { grid-area: tr-16; }
+.blog-page .blog-post-tracker.tr-17 { grid-area: tr-17; }
+.blog-page .blog-post-tracker.tr-18 { grid-area: tr-18; }
+.blog-page .blog-post-tracker.tr-19 { grid-area: tr-19; }
+.blog-page .blog-post-tracker.tr-20 { grid-area: tr-20; }
+.blog-page .blog-post-tracker.tr-21 { grid-area: tr-21; }
+.blog-page .blog-post-tracker.tr-22 { grid-area: tr-22; }
+.blog-page .blog-post-tracker.tr-23 { grid-area: tr-23; }
+.blog-page .blog-post-tracker.tr-24 { grid-area: tr-24; }
+.blog-page .blog-post-tracker.tr-25 { grid-area: tr-25; }
+
+/* Tracker hover cursor */
+.blog-page .blog-post-tracker:hover {
+    cursor: pointer;
+}
+
+/* Blog post items styling - 3D card */
+.blog-page .blog-post-item {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 16px;
+    transition: 700ms;
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    overflow: visible;
+    pointer-events: auto;
+}
+
+
+/* Brightness effect on hover */
+.blog-page .blog-post-tracker:hover ~ .blog-post-item {
+    transition: 300ms;
+    filter: brightness(1.1);
+}
+
+/* 3D rotation transforms for each tracker region */
+/* Top row */
+.blog-page .blog-post-tracker.tr-1:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-2:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-3:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-4:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-5:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Second row */
+.blog-page .blog-post-tracker.tr-6:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-7:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-8:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-9:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-10:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Middle row */
+.blog-page .blog-post-tracker.tr-11:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-12:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-13:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-14:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-15:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(0deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Fourth row */
+.blog-page .blog-post-tracker.tr-16:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-17:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-18:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-19:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-20:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-10deg) rotateY(10deg) rotateZ(0deg);
+}
+
+/* Bottom row */
+.blog-page .blog-post-tracker.tr-21:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(-10deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-22:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(-5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-23:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-24:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(5deg) rotateZ(0deg);
+}
+.blog-page .blog-post-tracker.tr-25:hover ~ .blog-post-item {
+    transition: 125ms ease-in-out;
+    transform: rotateX(-20deg) rotateY(10deg) rotateZ(0deg);
+}
+
+.breadcrumb-item.active {
+    display: none;
+}
+
+.blog-page .blog-post-item h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    min-height: 4.5rem; /* 固定标题高度，使不同长度的标题对齐 tags 位置 */
+}
+
+.blog-page .blog-post-item h3 a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-page .blog-post-item h3 a:hover {
+    color: #f8f9fa;
+    text-decoration: none;
+}
+
+.blog-page .blog-post-meta {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: -2rem !important; /* 负边距让博客页面的summary文本往上移动 */
+}
+
+.blog-page .blog-post-meta time {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.blog-page .blog-post-item p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Blog grid layout */
+.blog-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.td-blog-posts-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.td-blog-posts-list__item {
+    background: $consistent-bg;
+    backdrop-filter: $consistent-blur;
+    border: $consistent-border;
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+}
+
+.td-blog-posts-list__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Pagination styling */
+.blog-page .pagination {
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.blog-page .page-link {
+    background: $consistent-bg;
+    border: $consistent-border;
+    color: white;
+    padding: 0.75rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: $consistent-blur;
+}
+
+.blog-page .page-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.blog-page .page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+/* ==========================================================================
+   11. TAXONOMY STYLES
+   ========================================================================== */
+
+.taxonomy-terms-cloud .taxonomy-title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 文本在左 */
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white !important;
+    border-bottom: $consistent-white-border !important;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Additional taxonomy title styles for consistency */
+.taxonomy-title,
+h5.taxonomy-title,
+.td-content .taxonomy-title {
+    color: rgba(0, 0, 0, 0.622) !important;
+    font-weight: 700;
+    padding-bottom: 1rem; /* consistent spacing */
+    margin-bottom: 1rem;
+}
+/* Taxonomy tags and categories: white on non-blog pages, default on single blog pages */
+.td-page:not(.td-blog) .taxonomy-terms-cloud.taxo-tags .taxonomy-title,
+.td-page:not(.td-blog) .taxonomy-terms-cloud.taxo-categories .taxonomy-title {
+    color: white !important;
+    border-bottom: $consistent-white-border !important;
+}
+.td-page.td-blog .taxonomy-terms-cloud.taxo-tags .taxonomy-title {
+    color: initial !important;
+    border-bottom: 1px solid $black !important;
+}
+.td-page.td-blog .taxonomy-terms-cloud.taxo-categories .taxonomy-title {
+    color: initial !important;
+    border-bottom: 1px solid $black !important;
+}
+
+/* Taxonomy collapse/expand styles */
+.taxonomy-terms-cloud {
+    position: relative;
+}
+
+.taxonomy-terms-cloud.taxonomy-collapsed .taxonomy-terms {
+    /* 不立即隐藏，用于收纳动画；隐藏由JS在动画结束后设置 */
+    max-height: 0; /* 去掉 !important 以便动画时内联样式接管 */
+    opacity: 0;
+    overflow: hidden;
+}
+
+.taxonomy-terms-cloud.taxonomy-expanded .taxonomy-terms {
+    display: block;
+    opacity: 1;
+}
+
+/* 现代化的箭头按钮样式（固定在最右侧） */
+.taxonomy-toggle-arrow {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: auto; /* 将箭头推到最右边 */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: inherit;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+
+.taxonomy-toggle-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.taxonomy-toggle-arrow:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.taxonomy-toggle-arrow svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+/* 展开状态：箭头向上（表示可以收起） */
+.taxonomy-toggle-arrow.expanded svg {
+    transform: rotate(180deg);
+}
+
+/* 收起状态：箭头向下（默认，表示可以展开） */
+.taxonomy-toggle-arrow:not(.expanded) svg {
+    transform: rotate(0deg);
+}
+
+/* title文本内容样式 - flex布局确保文本在左，箭头在右 */
+.taxonomy-terms-cloud .taxonomy-title {
+    gap: 0.5rem;
+    text-align: left;
+}
+
+/* 让整个标题区域可点击，提高可用性 */
+.taxonomy-title-clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* 低调现代化高亮：与右侧目录一致的淡红系（参考 #f6c6ce） */
+.taxonomy-title-clickable {
+    border-radius: .375rem; /* 6px */
+    padding: .25rem .5rem;
+    transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.taxonomy-title-clickable:hover,
+.taxonomy-title-clickable:focus-visible {
+    /* 与右侧目录 glider 一致的淡红高亮 */
+    background-color: #f6c6ce;
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+}
+
+/* 箭头在高亮时同步变色 */
+.taxonomy-title-clickable:hover .taxonomy-toggle-arrow,
+.taxonomy-title-clickable:focus-visible .taxonomy-toggle-arrow {
+    color: rgba(139, 0, 26, 0.9);
+}
+
+/* 非博客页面（白字主题）下，确保对比度 */
+.td-page:not(.td-blog) .taxonomy-title-clickable:hover,
+.td-page:not(.td-blog) .taxonomy-title-clickable:focus-visible {
+    background-color: #f6c6ce;
+    box-shadow: 0 0 1px 0 rgba(139, 0, 26, 0.25), 0 6px 12px 0 rgba(139, 0, 26, 0.30);
+}
+
+/* 博客页面特定样式 */
+.td-page.td-blog .taxonomy-toggle-arrow {
+    color: rgba(0, 0, 0, 0.622);
+}
+
+.td-page:not(.td-blog) .taxonomy-toggle-arrow {
+    color: white;
+}
+
+/* 动画效果优化 */
+.taxonomy-terms-cloud .taxonomy-terms {
+    transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+    will-change: max-height, opacity;
+}
+
+/* 确保收起时完全不占用空间 */
+.taxonomy-terms-cloud.taxonomy-collapsed {
+    margin-bottom: 0;
+}
+
+.taxonomy-terms-cloud.taxonomy-collapsed .taxonomy-terms {
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   12. FOOTER STYLES
+   ========================================================================== */
+
+/* Footer styling - white theme */
+.td-footer {
+    padding-top: 1rem !important;
+    padding-bottom: 0.8rem !important;
+    min-height: auto !important;
+    height: auto !important;
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    border-top: 1px solid #e9ecef !important;
+}
+
+.td-footer .container-fluid {
+    padding-top: 0.05rem !important;
+    padding-bottom: 0.05rem !important;
+}
+
+.td-footer .row {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer .row.mx-md-2 {
+    padding-top: 0.01rem !important;
+    padding-bottom: 0.01rem !important;
+}
+
+.td-footer__left,
+.td-footer__right,
+.td-footer__center {
+    padding-top: 0.01rem !important;
+    padding-bottom: 0.01rem !important;
+}
+
+.td-footer__links-list {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer__links-item {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.td-footer__links-item a {
+    color: #666666 !important;
+    transition: color 0.3s ease !important;
+}
+
+.td-footer__links-item a:hover {
+    color: #333333 !important;
+}
+
+.td-footer__copyright {
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    color: #666666 !important;
+}
+
+.td-footer__copyright a {
+    color: #666666 !important;
+    text-decoration: none !important;
+}
+
+.td-footer__copyright a:hover {
+    color: #333333 !important;
+    text-decoration: underline !important;
+}
+
+/* ==========================================================================
+   13. UTILITY STYLES
+   ========================================================================== */
+
+/* Time display */
+#time-display {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    font-family: 'Playwrite PL', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    z-index: 9999;
+    text-align: right;
+    line-height: 1.8;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* Hide datetime attributes except for lastmod */
+.td-content [datetime]:not(.td-page-meta__lastmod [datetime]) {
+    display: none !important;
+}
+
+.td-page-meta__lastmod {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    color: inherit !important;
+}
+
+/* Hide page meta block globally (view/edit/child/issue/print) */
+.td-page-meta {
+    display: none !important;
+}
+
+.td-content .td-page-meta__lastmod,
+.td-content div.td-page-meta__lastmod,
+.td-content .border-top.td-page-meta__lastmod,
+.td-content .text-body-secondary.td-page-meta__lastmod {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+    border-top-width: 0 !important;
+    border-top-style: none !important;
+    border-top-color: transparent !important;
+    color: inherit !important;
+}
+
+/* Hide blog post body paragraphs */
+.td-blog-posts-list__body > p:last-child {
+    display: none;
+}
+
+/* Override inline code color to inherit default body color */
+.td-section.td-blog .td-content code {
+    color: var(--bs-body-color);
+
+}
+
+
+/* ==========================================================================
+   14. RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* User select utility */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    /* Disable 3D effects on mobile for better performance and UX */
+    .blog-page .blog-post-canvas {
+        display: none;
+    }
+    
+    .blog-page .blog-post-item {
+        position: relative;
+        transform: none !important;
+        transition: all 0.3s ease;
+    }
+    
+    /* Disable glow effect on mobile */
+    .blog-page .blog-post-container::before {
+        display: none;
+    }
+    
+    .blog-page .blog-post-container:hover .blog-post-item {
+        filter: none;
+    }
+    
+    /* Restore simple hover effect for mobile */
+    .blog-page .blog-post-item:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+    /* Button adjustments */
+    .btn-transparent {
+        margin: 5px !important;
+        width: auto;
+    }
+    
+    .btn-opaque {
+        margin: 5px !important;
+        width: auto;
+    }
+    
+    /* Logo adjustments */
+    .td-navbar .navbar-brand img,
+    .td-navbar .navbar-brand svg {
+        transform: translateY(-6px) !important;
+    }
+    
+    .td-navbar .navbar-brand:hover img,
+    .td-navbar .navbar-brand:hover svg {
+        transform: translateY(-8px) !important;
+    }
+    
+    /* Contact page adjustments */
+    .contact-info-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        padding-top: 12vh;
+    }
+    
+    .contact-card {
+        min-width: 220px;
+        padding: 1.8rem 1.3rem;
+    }
+    
+    .contact-icon i {
+        font-size: 2.8rem;
+    }
+    
+    .contact-value {
+        font-size: 1.1rem;
+    }
+    
+    /* Blog page adjustments */
+    .blog-page h1 {
+        font-size: 2.5rem;
+    }
+    
+    .blog-collection-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .blog-collection-title {
+        font-size: 1.3rem;
+    }
+    
+    .blog-page .blog-post-item {
+        padding: 1.5rem;
+    }
+    
+    .blog-page .blog-post-item h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* Grid layout adjustments */
+    .td-blog-posts-list,
+    .blog-posts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 992px) {
+    .td-blog-posts-list,
+    .blog-posts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info-container {
+        padding-top: 10vh;
+    }
+    
+    .contact-card {
+        min-width: 180px;
+        padding: 1.5rem 1.2rem;
+    }
+    
+    .contact-icon i {
+        font-size: 2.4rem;
+    }
+    
+    .contact-value {
+        font-size: 1rem;
+    }
+}
+
+.breadcrumb{
+    --bs-breadcrumb-divider-color: #b2b4ff !important;
+}
+
+
+
+
+// body.td-page.td-blog .td-sidebar a,
+// body.td-page.td-blog .td-sidebar-toc a{
+//     color: black !important;
+// }
+
+/* Placeholder brightness when inactive for sidebar search on single blog pages */
+.td-page.td-blog .td-sidebar__search .td-search__input::placeholder {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Restore nav search icon color on single blog pages */
+.td-page.td-blog header nav .td-search__icon {
+    color: initial !important;
+}
+
+/* Ensure search icons sit above blurred backgrounds */
+.td-search__icon {
+    z-index: 2 !important;
+}

@@ -1,0 +1,110 @@
+{{ define "main" }}
+<style>
+
+body {
+    background-image: url('{{ .Site.Params.blogBackground }}');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+body::before {
+    content: '';
+    display: block !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+/* Sidebar text color for article pages */
+.td-section.td-blog .td-sidebar,
+.td-section.td-blog .td-sidebar-toc {
+    color: black !important;
+}
+.td-section.td-blog .td-sidebar a,
+.td-section.td-blog .td-sidebar-toc a {
+    color: black !important;
+}
+
+/* Fix paragraph spacing in blog content */
+.td-content p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+}
+</style>
+<div class="td-content">
+  <h1>{{ .Title }}</h1>
+    <!-- 分类和标签 -->
+    {{ if or .Params.categories .Params.tags }}
+    <header class="article-meta">
+      {{ if .Params.tags }}
+        <div class="taxonomy taxonomy-terms-article taxo-tags">
+          <h5 class="taxonomy-title">{{ i18n "tags" | default "Tags" }}:</h5>
+          <ul class="taxonomy-terms">
+            {{ range .Params.tags }}
+              <li><a class="taxonomy-term" href="{{ $.Site.BaseURL }}{{ $.Site.Language.Lang }}/tags/{{ . | urlize }}/" data-taxonomy-term="{{ . }}"><span class="taxonomy-label">{{ . }}</span></a></li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+      {{ if .Params.categories }}
+        <div class="taxonomy taxonomy-terms-article taxo-categories">
+          <h5 class="taxonomy-title">{{ i18n "categories" | default "Categories" }}:</h5>
+          <ul class="taxonomy-terms">
+            {{ range .Params.categories }}
+              <li><a class="taxonomy-term" href="{{ $.Site.BaseURL }}{{ $.Site.Language.Lang }}/categories/{{ . | urlize }}/" data-taxonomy-term="{{ . }}"><span class="taxonomy-label">{{ . }}</span></a></li>
+            {{ end }}
+          </ul>
+        </div>
+      {{ end }}
+    </header>
+  {{ end }}
+
+  {{ partial "page-meta/lastmod.html" . }}
+
+  <div class="original-statement my-3" style="font-size: 0.9em; color: #666; font-style: italic; border-left: 3px solid #007bff; padding-left: 12px;">
+    {{ i18n "original_statement" | default "Original Statement: This is an original work by the author, licensed under an open license that permits free use, modification, distribution, and commercial application without additional authorization." }}
+  </div>
+
+  <hr class="my-4">
+  
+  {{ with .Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
+  
+  {{ if (and (not .Params.hide_readingtime) (.Site.Params.ui.readingtime.enable)) }}
+    {{ partial "reading-time.html" . }}
+  {{ end }}
+  
+  {{ .Content }}
+
+  <hr class="my-4">
+  <section class="donate-section">
+    <h3>{{ i18n "donate_title" | default "Buy me a coffee" }}</h3>
+    <p>{{ i18n "donate_desc" | default "If this article helped you, consider supporting the author." }}</p>
+    {{ $coffeeDir := "static/images/coffee" }}
+    {{ $files := readDir $coffeeDir }}
+    <div class="donate-images" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+      {{ range $files }}
+        {{ if not .IsDir }}
+          {{ $name := .Name }}
+          {{ $encoded := replace $name " " "%20" }}
+          {{ $path := printf "images/coffee/%s" $encoded }}
+          <img src="{{ $path | absURL }}" alt="donation {{$name}}" loading="lazy" style="max-height:500px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+  
+  {{ if (.Site.Params.comments) | and (ne .Params.commentable false) | and (.Site.Params.comments_opts.commentable) }}
+    {{ template "_internal/disqus.html" . }}
+  {{ end }}
+</div>
+{{ partial "math.html" . }}
+<script defer src="{{ .Site.BaseURL }}js/toc-glider.js"></script>
+<script defer src="{{ .Site.BaseURL }}js/custom-scrollbar.js"></script>
+<script defer src="{{ .Site.BaseURL }}js/taxonomy-collapse.js"></script>
+{{ end }}

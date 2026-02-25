@@ -1,39 +1,48 @@
 ---
-title: About Goldydocs
+title: About Me
 linkTitle: About
-description: A sample site using the Docsy Hugo theme.
-menu: { main: { weight: 10 } }
+menu: {main: {weight: 10}}
 ---
 
-{{% blocks/cover
-  title="About Goldydocs"
-  height="auto td-below-navbar"
-  image_anchor="bottom"
-%}}
+{{< blocks/cover image_anchor="top" height="full" >}}
 
-<!-- prettier-ignore -->
-{{% _param description %}}
-{.display-6}
+<div class="contact-info-container">
+  <div class="contact-card">
+    <div class="contact-icon">
+      <i class="fab fa-qq"></i>
+    </div>
+    <div class="contact-details">
+      <p class="contact-value">914640123</p>
+    </div>
+  </div>
+  
+  <div class="contact-card">
+    <div class="contact-icon">
+      <i class="fab fa-weixin"></i>
+    </div>
+    <div class="contact-details">
+      <p class="contact-value">miao23333QAQ</p>
+    </div>
+  </div>
+  
+  <div class="contact-card">
+    <div class="contact-icon">
+      <i class="fas fa-envelope"></i>
+    </div>
+    <div class="contact-details">
+      <p class="contact-value">workworkzed@gmail.com</p>
+    </div>
+  </div>
+</div>
+{{< blocks/link-down color="light" >}}
 
-{{% /blocks/cover %}}
 
-{{% blocks/lead color="white" %}}
+{{< /blocks/cover >}}
 
-Goldydocs is a sample site using the [Docsy](https://github.com/google/docsy)
-Hugo theme that shows what it can do and provides you with a template site
-structure. It’s designed for you to clone and edit as much as you like. See the
-different sections of the documentation and site for more ideas.
+{{% blocks/section color="primary" %}}
 
-{{% /blocks/lead %}}
+## About Me
 
-{{% blocks/section type="row text-center h1" %}}
-
-This is another section with center alignment
-
-{{% /blocks/section %}}
-
-{{% blocks/section type="h1" %}}
-
-This is another section with default alignment
+Welcome to my personal space where I share my journey in technology and development.
 
 {{% /blocks/section %}}
