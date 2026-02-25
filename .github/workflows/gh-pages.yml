@@ -41,14 +41,17 @@ jobs:
           cache: 'npm'  # 缓存npm依赖，加速构建
           cache-dependency-path: '**/package-lock.json'
 
-      # 4. 清理旧的构建产物和缓存
+      # 4. 清理旧的构建产物
       - name: Clean build artifacts
         run: | 
-          rm -rf public resources/_gen
+          rm -rf public
           npm run clean
 
       # 5. 安装npm依赖（Docsy主题必需）
       - run: npm install
+
+      # 5.5. 全局安装postcss-cli和rtlcss（样式处理必需）
+      - run: npm install -g postcss-cli rtlcss
 
       # 6. 更新Hugo模块（下载Docsy主题）
       - name: Update Hugo Modules
