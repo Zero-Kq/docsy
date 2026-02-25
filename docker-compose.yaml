@@ -1,15 +1,13 @@
-version: '3.8'
+version: "3.8"
 
 services:
+
   site:
     image: docsy/docsy-example
     build:
       context: .
-    # 修复command：Hugo server需要完整指令，绑定0.0.0.0允许外部访问
-    command: server --bind 0.0.0.0 --baseURL "http://localhost:1313/docsy/" --liveReloadPort 443
+    command: server
     ports:
-      - '1313:1313'
-    environment:
-      - HUGO_BASEURL=https://zero-kq.github.io/docsy/
+      - "1313:1313"
     volumes:
       - .:/src

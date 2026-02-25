@@ -28,7 +28,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.155.0'
+          hugo-version: '0.146.0'
           extended: true
 
       - name: Setup Node
@@ -39,11 +39,6 @@ jobs:
           cache-dependency-path: '**/package-lock.json'
       
       - run: npm install
-      - name: Ensure Hugo modules are up to date
-        run: |
-          hugo mod clean || true
-          hugo mod get -u || true
-          hugo mod tidy || true
       - name: Show latest commit and branch
         run: |
           echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
@@ -56,18 +51,7 @@ jobs:
           git log -1 --pretty=oneline -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
           git status --porcelain ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
       
-      - name: Build site with Hugo
-        run: |
-          hugo --enableGitInfo \
-            --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ \
-            --minify \
-            --cleanDestinationDir
-
-      - name: Create .nojekyll in public (disable Jekyll processing)
-        run: |
-          if [ -d public ]; then
-            touch public/.nojekyll
-          fi
+      - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

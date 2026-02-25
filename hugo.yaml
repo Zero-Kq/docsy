@@ -227,14 +227,3 @@ module:
 frontmatter:
   date: [":git", ":fileModTime", "date", "publishDate", ":default"]
   lastmod: [":git", ":fileModTime", "lastmod", ":default"]
-
-# Security: allow specific environment variables to be read by shortcodes
-# Docsy shortcodes may call os.Getenv("BRANCH") when rendering build info.
-# Hugo blocks access to arbitrary env vars by default; whitelist BRANCH here.
-security:
-  funcs:
-    getenv:
-      - '^HUGO_'
-      - '^CI$'
-      - '^BRANCH$'
-      - '^BUILD_ID$'
