@@ -19,4 +19,4 @@ title: Zed's Doc Site
 {{< /blocks/cover >}}
 
 
-<script src="/Docsy/js/time-display.js"></script>
+<script src="/docsy/js/time-display.js"></script>

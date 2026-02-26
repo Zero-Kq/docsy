@@ -38,4 +38,4 @@ h1.display-1 {
 {{< /blocks/cover >}}
 
 
-<script src="/Docsy/js/time-display.js"></script>
+<script src="/docsy/js/time-display.js"></script>
