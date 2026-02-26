@@ -29,7 +29,7 @@ weight: 10
 
 ### 手动安装
 
-1. 下载Mod文件：[GitHub仓库](https://github.com/pinyinjj/Victoria3-War-Reparations-Infamy-Fix/tree/1.0.0)
+1. 下载Mod文件：[GitHub仓库](https://github.com/Zero-kq/Victoria3-War-Reparations-Infamy-Fix/tree/1.0.0)
 2. 放置到维多利亚3 Mod目录
 3. 在游戏启动器中启用Mod
 

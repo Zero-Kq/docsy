@@ -8,7 +8,7 @@ categories: ["游戏插件"]
 
 ## 1. 概述
 
-[`HekiliHelper`](https://github.com/pinyinjj/HekiliHelper) 是为《魔兽世界》插件 [`Hekili`](https://www.curseforge.com/wow/addons/hekili) 设计的辅助扩展模块。其核心目标并非独立运行，而是作为 `Hekili` 的功能延伸，提供主插件不具备的特定功能。例如，为治疗职业（如治疗萨满）提供智能技能推荐，以及为近战职业提供目标切换提示等。
+[`HekiliHelper`](https://github.com/Zero-kq/HekiliHelper) 是为《魔兽世界》插件 [`Hekili`](https://www.curseforge.com/wow/addons/hekili) 设计的辅助扩展模块。其核心目标并非独立运行，而是作为 `Hekili` 的功能延伸，提供主插件不具备的特定功能。例如，为治疗职业（如治疗萨满）提供智能技能推荐，以及为近战职业提供目标切换提示等。
 
 本文将通过代码实例，详细阐述 `HekiliHelper` 如何实现插件间非侵入式扩展的架构范式。
 
@@ -326,7 +326,7 @@ sequenceDiagram
 ---
 
 ## 参考文档
-- [HekiliHelper GitHub Repository](https://github.com/pinyinjj/HekiliHelper)
+- [HekiliHelper GitHub Repository](https://github.com/Zero-kq/HekiliHelper)
 - [Ace3 开发文档 (Getting Started)](https://www.wowace.com/projects/ace3/pages/getting-started)
 - [Hekili Addon on CurseForge](https://www.curseforge.com/wow/addons/hekili)
 - [Python 运行时补丁：`monkey-patching` 的利弊与风险](https://www.zyxy.net/archives/11200)

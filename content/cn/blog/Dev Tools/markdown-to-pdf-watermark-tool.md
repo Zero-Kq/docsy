@@ -27,7 +27,7 @@ draft: false
 ### 运行项目
 
 ```bash
-git clone https://github.com/pinyinjj/Markdown-to-PDF-Tool.git
+git clone https://github.com/Zero-kq/Markdown-to-PDF-Tool.git
 cd md-pdf-watermark
 python main.py
 ```

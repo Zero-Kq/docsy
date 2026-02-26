@@ -29,7 +29,7 @@ h1.display-1 {
 <a class="btn btn-lg btn-transparent me-3 mb-4" href="/docs/">
   了解更多 <i class="fas fa-arrow-alt-circle-right ms-2"></i>
 </a>
-<a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/pinyinjj">
+<a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/Zero-kq">
   GitHub <i class="fab fa-github ms-2 "></i>
 </a>
 
