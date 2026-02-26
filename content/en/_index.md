@@ -7,7 +7,7 @@ title: Zed's Doc Site
 <link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
 
 {{< blocks/cover title="Code & Thoughts" image_anchor="top" height="full" >}}
-<a class="btn btn-lg btn-transparent me-3 mb-4" href="/docs/">
+<a class="btn btn-lg btn-transparent me-3 mb-4" href="docs/">
   Learn More <i class="fas fa-arrow-alt-circle-right ms-2"></i>
 </a>
 <a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/Zero-kq">

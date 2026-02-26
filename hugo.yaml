@@ -1,5 +1,5 @@
 baseURL: https://zero-kq.github.io/docsy/
-title: Zed 
+title: Zero-kq
 
 # cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu
 
@@ -55,7 +55,7 @@ languages:
   cn: 
     languageName: "中文(Chinese)"
     contentDir: content/cn
-    title: "Zed"
+    title: "Zerokq"
     params:
       description: "思索与记录。"
       time_format_default: "2006年1月2日"
@@ -63,7 +63,7 @@ languages:
   # cSpell:enable
   en:
     languageName: English
-    title: Zed
+    title: Zerokq
     contentDir: content/en
     params:
       description: Technical sharing and experience recording.

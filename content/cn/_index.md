@@ -1,5 +1,5 @@
 ---
-title: Zed的文档网站
+title: Z的文档网站
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@ h1.display-1 {
 </style>
 
 {{< blocks/cover title="代碼思考" image_anchor="top" height="full" >}}
-<a class="btn btn-lg btn-transparent me-3 mb-4" href="/docs/">
+<a class="btn btn-lg btn-transparent me-3 mb-4" href="docs/">
   了解更多 <i class="fas fa-arrow-alt-circle-right ms-2"></i>
 </a>
 <a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/Zero-kq">
