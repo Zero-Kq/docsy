@@ -50,8 +50,6 @@ jobs:
           echo "Check content file commit (if tracked):"
           git log -1 --pretty=oneline -- ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
           git status --porcelain ./content/cn/blog/Dev\ Tools/Markdown转PDF加水印工具.md || true
-
-
       
       - run: hugo --enableGitInfo --baseURL https://${REPO_OWNER}.github.io/${REPO_NAME}/ --minify
 
