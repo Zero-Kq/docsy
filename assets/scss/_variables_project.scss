@@ -318,8 +318,9 @@ body > header > nav > div > div.d-none.d-lg-block > div > input::-webkit-search-
 /* Blog and docs pages navbar transparency, no !important since default is important, double important causes problem */
 /* NO !important HERE` */
 .td-section.td-blog .td-navbar,
-.td-section.td-docs .td-navbar {
-    background: rgba(255, 255, 255, 0.1);
+.td-section.td-docs .td-navbar,
+.td-section.td-reviews .td-navbar {
+    background: rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: $consistent-blur;
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
     /* 确保navbar在sidebar之上 */
@@ -1525,4 +1526,84 @@ h5.taxonomy-title,
 /* Ensure search icons sit above blurred backgrounds */
 .td-search__icon {
     z-index: 2 !important;
+}
+
+/* ==========================================================================
+   15. DOCS AND REVIEWS PAGES STYLES (Same as Blog)
+   ========================================================================== */
+
+/* Sidebar styles for docs and reviews pages - same as blog */
+.td-page.td-docs .td-sidebar__inner a:hover,
+.td-page.td-reviews .td-sidebar__inner a:hover {
+    background: $global-hover-bg-dark !important;
+    border-radius: 4px !important;
+    text-decoration: none;
+}
+
+.td-page.td-docs .td-sidebar__inner a,
+.td-page.td-reviews .td-sidebar__inner a {
+    color: initial !important;
+}
+
+.td-page.td-docs .td-sidebar-nav .td-sidebar-link.tree-root,
+.td-page.td-reviews .td-sidebar-nav .td-sidebar-link.tree-root {
+    border-bottom-color: $black !important;
+}
+
+/* TOC styles for docs and reviews pages - same as blog */
+.td-page.td-docs .td-toc,
+.td-page.td-docs .td-toc *,
+.td-page.td-docs .td-toc #TableOfContents,
+.td-page.td-docs .td-toc #TableOfContents *,
+.td-page.td-docs .td-toc #TableOfContents ul,
+.td-page.td-docs .td-toc #TableOfContents li,
+.td-page.td-docs .td-toc #TableOfContents a,
+.td-page.td-reviews .td-toc,
+.td-page.td-reviews .td-toc *,
+.td-page.td-reviews .td-toc #TableOfContents,
+.td-page.td-reviews .td-toc #TableOfContents *,
+.td-page.td-reviews .td-toc #TableOfContents ul,
+.td-page.td-reviews .td-toc #TableOfContents li,
+.td-page.td-reviews .td-toc #TableOfContents a {
+    color: initial !important;
+}
+
+/* Search styles for docs and reviews pages - same as blog */
+.td-page.td-docs .td-sidebar__search .td-search__icon,
+.td-page.td-reviews .td-sidebar__search .td-search__icon {
+    color: initial !important;
+}
+
+.td-page.td-docs .td-sidebar__search .td-search__input,
+.td-page.td-reviews .td-sidebar__search .td-search__input {
+    background: $global-hover-bg-dark !important;
+    border-color: $black !important;
+    color: initial !important;
+}
+
+.td-page.td-docs .td-sidebar__search .td-search__input::placeholder,
+.td-page.td-reviews .td-sidebar__search .td-search__input::placeholder {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.td-page.td-docs .td-sidebar__search .td-search__input:focus,
+.td-page.td-docs .td-sidebar__search .td-search__input:active,
+.td-page.td-reviews .td-sidebar__search .td-search__input:focus,
+.td-page.td-reviews .td-sidebar__search .td-search__input:active {
+    background: $global-hover-bg !important;
+    border-color: $black !important;
+    color: $black !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px $black !important;
+}
+
+.td-page.td-docs header nav .td-search__icon,
+.td-page.td-reviews header nav .td-search__icon {
+    color: initial !important;
+}
+
+/* Inline code color for docs and reviews pages */
+.td-section.td-docs .td-content code,
+.td-section.td-reviews .td-content code {
+    color: var(--bs-body-color);
 }

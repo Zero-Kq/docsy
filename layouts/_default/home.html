@@ -1,0 +1,397 @@
+{{ define "main" }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
+
+<style>
+.td-content { font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif; }
+.td-cover-block a,
+.td-cover-block .lead { font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif; }
+.td-cover-block .display-1,
+.td-cover-block h1,
+.td-cover .display-1,
+.td-hero .display-1,
+h1.display-1 {
+  font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif !important;
+  letter-spacing: 0.2em !important;
+  line-height: 1.15 !important;
+  font-size: 6.2rem !important;
+  text-align: center !important;
+}
+
+/* 固定背景在 body 上 */
+body {
+  background-image: url('/docsy/images/backgrounds/bg11.webp') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+}
+
+/* 背景蒙版 - 固定在背景图片上 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 让 section 元素透明，不覆盖 body 背景 */
+.td-cover-block,
+.td-box {
+  background: transparent !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  position: relative !important;
+}
+
+/* 封面 section 内容居中 */
+.td-cover-block .td-overlay__inner {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  text-align: center !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.td-cover-block .text-center {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-top: -30vh !important;
+}
+
+/* 移除所有深色背景类 */
+.td-overlay--dark,
+.-bg-dark,
+.td-box--dark {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* 移除所有可能的伪元素蒙版 */
+.td-cover-block::before,
+.td-box::before,
+.td-overlay::before,
+.td-overlay--dark::before,
+.-bg-dark::before,
+.td-box--dark::before,
+.td-cover-block.td-overlay::before,
+.td-overlay::after,
+.td-overlay--dark::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  opacity: 0 !important;
+}
+
+/* 第二个 section 样式 */
+.td-box.td-box--height-full {
+  min-height: 100vh !important;
+  height: auto !important;
+}
+
+/* 让 col 填满 section */
+.td-box .col {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+}
+
+/* 固定导航栏 */
+.td-navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  background: transparent !important;
+  transition: background 0.3s ease;
+}
+
+.td-navbar.scrolled {
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* 第二个页面样式 */
+.second-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.second-page .container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: white;
+  font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif;
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.article-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 文章链接样式 - 与封面按钮样式一致 */
+.article-link {
+  display: block;
+  padding: 2rem;
+  color: white !important;
+  text-decoration: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.article-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.article-date {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.article-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: white;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.article-summary {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
+  flex: 2;
+}
+
+.article-summary a {
+  color: white !important;
+  text-decoration: none;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 按钮样式 - 与封面按钮一致 */
+.btn-primary,
+.btn-transparent {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover,
+.btn-transparent:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.no-articles {
+  text-align: center;
+  padding: 4rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .article-link {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+  <div class="col-12">
+    <div class="container td-overlay__inner">
+      <div class="text-center">
+        <h1 class="display-1 mt-0 mt-md-5 pb-4">代碼思考</h1>
+        
+        <div class="pt-3 lead">
+          <a class="btn btn-lg btn-transparent me-3 mb-4" href="docs/">
+            了解更多 <i class="fas fa-arrow-alt-circle-right ms-2"></i>
+          </a>
+          <a class="btn btn-lg btn-transparent me-3 mb-4" href="https://github.com/Zero-kq">
+            GitHub <i class="fab fa-github ms-2 "></i>
+          </a>
+          <p class="lead">以開發者的思維來思考問題。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="time-display" style="position: absolute; bottom: 20px; right: 20px; color: rgba(255, 255, 255, 0.2); padding: 10px 15px; font-family: 'Playwrite PL', sans-serif !important; font-size: 14px; font-weight: 300; z-index: 9999; text-align: right; line-height: 1.8; pointer-events: none; transition: opacity 0.3s; background-color: transparent; border: none; outline: none; box-shadow: none;"></div>
+</section>
+
+<section class="row td-box td-box--dark td-box--height-full">
+  <div class="col">
+    <div class="second-page">
+      <div class="container">
+        <h2 class="section-title">最新文章</h2>
+        <p class="section-subtitle">探索最新的技术文章和学习笔记</p>
+        
+        {{ $latestPosts := where .Site.RegularPages "Type" "blog" }}
+        {{ $latestPosts = $latestPosts.ByDate.Reverse | first 6 }}
+        
+        {{ if gt (len $latestPosts) 0 }}
+        <div class="articles-grid">
+          {{ range $latestPosts }}
+          <div class="article-card">
+            <a href="{{ .RelPermalink }}" class="article-link">
+              <div class="article-content">
+                <div class="article-date">
+                  {{ .Date.Format "2006-01-02" }}
+                </div>
+                <h3 class="article-title">{{ .Title }}</h3>
+                <div class="article-summary">
+                  {{ if .Summary }}
+                    {{ .Summary }}
+                  {{ else if .Params.description }}
+                    {{ .Params.description }}
+                  {{ else }}
+                    {{ .Content | truncate 200 }}
+                  {{ end }}
+                </div>
+                <div class="article-tags">
+                  {{ if .Params.tags }}
+                    {{ range first 3 .Params.tags }}
+                      <span class="tag">{{ . }}</span>
+                    {{ end }}
+                  {{ end }}
+                </div>
+              </div>
+            </a>
+          </div>
+          {{ end }}
+        </div>
+        
+        <div class="text-center mt-8">
+          <a href="/docsy/blog/" class="btn btn-transparent">
+            查看全部文章
+            <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+        {{ else }}
+        <div class="no-articles">
+          <p>暂无文章</p>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/docsy/js/time-display.js"></script>
+<script>
+window.addEventListener('scroll', function() {
+  const navbar = document.querySelector('.td-navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+</script>
+{{ end }}
