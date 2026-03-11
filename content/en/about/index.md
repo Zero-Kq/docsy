@@ -2,11 +2,18 @@
 title: About Me
 linkTitle: About
 menu: {main: {weight: 10}}
+layout: about/single
 ---
 
-{{< blocks/cover image_anchor="top" height="full" >}}
-
-<div class="contact-info-container">
+<section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+  <div class="col-12">
+    <div class="container td-overlay__inner">
+      <div class="text-center">
+        
+        
+        <div class="pt-3 lead">
+          
+              <div class="contact-info-container">
   <div class="contact-card">
     <div class="contact-icon">
       <i class="fab fa-qq"></i>
@@ -15,7 +22,6 @@ menu: {main: {weight: 10}}
       <p class="contact-value">914640123</p>
     </div>
   </div>
-  
   <div class="contact-card">
     <div class="contact-icon">
       <i class="fab fa-weixin"></i>
@@ -24,7 +30,6 @@ menu: {main: {weight: 10}}
       <p class="contact-value">miao23333QAQ</p>
     </div>
   </div>
-  
   <div class="contact-card">
     <div class="contact-icon">
       <i class="fas fa-envelope"></i>
@@ -34,15 +39,16 @@ menu: {main: {weight: 10}}
     </div>
   </div>
 </div>
-{{< blocks/link-down color="light" >}}
+<div class="about-content">
+  <h2>About Me</h2>
+  <p>Welcome to my personal space where I share my journey in technology and development.</p>
+</div>
+<p><a class="btn btn-link text-light" href="#td-block-1" aria-label="Read"><i class="fa-solid fa-circle-chevron-down" style="font-size: 400%"></i></a></p>
 
-
-{{< /blocks/cover >}}
-
-{{% blocks/section color="primary" %}}
-
-## About Me
-
-Welcome to my personal space where I share my journey in technology and development.
-
-{{% /blocks/section %}}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>

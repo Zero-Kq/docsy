@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ printf "%s | %s" .Title .Site.Title }}{{ end }}</title>
+  {{ partial "head.html" . }}
+  
+  <!-- 全局样式 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+TC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playwrite+PL:wght@100..400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* 固定背景在 body 上 */
+    body {
+      background-image: url('/docsy/images/backgrounds/bg11.webp') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-attachment: fixed !important;
+      background-repeat: no-repeat !important;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* 背景蒙版 - 固定在背景图片上 */
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      z-index: 2147483646 !important;
+      pointer-events: none !important;
+      display: block !important;
+    }
+    
+    /* 确保 bg-overlay 也能工作 */
+    .bg-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      z-index: 2147483646 !important;
+      pointer-events: none !important;
+    }
+    
+    /* 让 section 元素透明，不覆盖 body 背景 */
+    .td-cover-block,
+    .td-box,
+    section,
+    div.td-cover-block,
+    div.td-box,
+    .td-cover,
+    .td-hero,
+    .container-fluid,
+    .td-outer,
+    .td-main {
+      background: transparent !important;
+      background-image: none !important;
+      background-color: transparent !important;
+      position: relative !important;
+    }
+    
+    /* 移除所有深色背景类 */
+    .td-overlay--dark,
+    .-bg-dark,
+    .td-box--dark,
+    .td-box--primary,
+    .td-overlay,
+    .td-cover-block,
+    .td-cover,
+    .td-hero,
+    .row,
+    .col {
+      background: transparent !important;
+      background-color: transparent !important;
+      background-image: none !important;
+    }
+    
+    /* 移除所有可能的伪元素蒙版 */
+    *::before,
+    *::after {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      opacity: 0 !important;
+    }
+    
+    /* 保留 body::after 用于背景蒙版 */
+    body::after {
+      display: block !important;
+      content: '' !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      opacity: 1 !important;
+    }
+    
+    /* 移除 body::before */
+    body::before {
+      display: none !important;
+      content: none !important;
+      background: none !important;
+      opacity: 0 !important;
+    }
+    
+    /* 固定导航栏 */
+    .td-navbar {
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      background: transparent !important;
+      transition: background 0.3s ease;
+    }
+    
+    .td-navbar.scrolled {
+      background: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* 关于页样式 */
+    .contact-info-container {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .contact-icon {
+      font-size: 1.5rem;
+      color: white;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .contact-details {
+      text-align: left;
+    }
+    
+    .contact-value {
+      color: white;
+      margin: 0;
+      font-size: 1rem;
+    }
+    
+    .about-content {
+      margin-top: 3rem;
+      text-align: center;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1.5rem;
+    }
+    
+    .about-content h2 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: 1rem;
+      font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif;
+    }
+    
+    .about-content p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+    
+    /* 覆盖文档内容样式 */
+    .td-content {
+      font-family: 'WDXL Lubrifont TC','Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC','Hiragino Sans TC',sans-serif;
+      color: white;
+    }
+    
+    .td-content h1,
+    .td-content h2,
+    .td-content h3,
+    .td-content h4,
+    .td-content h5,
+    .td-content h6 {
+      color: white;
+    }
+    
+    .td-content a {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .td-content a:hover {
+      color: white;
+    }
+    
+    @media (max-width: 768px) {
+      .contact-info-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      
+      .contact-card {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+      
+      .about-content h2 {
+        font-size: 2rem;
+      }
+      
+      .about-content p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="td-{{ .Kind }}">
+  <header>
+    {{ partial "navbar.html" . }}
+  </header>
+  <div class="container-fluid td-default td-outer">
+    <main role="main" class="td-main">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+  </div>
+  {{ partial "scripts.html" . }}
+  
+  <script>
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.td-navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>
